@@ -176,7 +176,9 @@ fn resolve_api_key() -> Result<String, AtlasError> {
 }
 
 fn dirs_next_home() -> Option<PathBuf> {
-    env::var_os("HOME").map(PathBuf::from)
+    env::var_os("HOME")
+        .or_else(|| env::var_os("USERPROFILE"))
+        .map(PathBuf::from)
 }
 
 fn run_live(req: &CollapseRequest) -> Result<CollapseResult, AtlasError> {
