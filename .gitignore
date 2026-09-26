@@ -1,0 +1,9 @@
+/target
+**/target
+.DS_Store
+.env
+.idea
+.vscode
+/dist
+/bundle
+*.pdb

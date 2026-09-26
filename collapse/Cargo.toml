@@ -1,0 +1,23 @@
+[package]
+name = "collapse"
+version = "0.1.0"
+edition = "2021"
+authors = ["Moth Hack 2026"]
+license = "MIT"
+description = "COLLAPSE — Atlas-powered VST3 audio effect for Moth Hack track 07"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+nih_plug = { git = "https://github.com/robbert-vdh/nih-plug", features = ["assert_process_allocs"] }
+nih_plug_egui = { git = "https://github.com/robbert-vdh/nih-plug" }
+atomic_float = "0.1"
+parking_lot = "0.12"
+ureq = { version = "2.12", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+hound = "3.5"
+rand = "0.8"
+base64 = "0.22"
