@@ -27,19 +27,24 @@ Build on a Mac with the same repo (`cargo build --release -p collapse`). Package
 
 ## Atlas live mode
 
-1. Create an account at [platform.mothquantum.com](https://platform.mothquantum.com/)
-2. Copy `.env.example` → export vars in the shell that launches your DAW:
+API docs: [api.mothquantum.com/docs](https://api.mothquantum.com/docs)
 
 ```bash
+# 1) Save key (hidden prompt) — never commit this file
+./scripts/set_atlas_key.sh
+
+# 2) Smoke-test (downloads a live IR)
+ATLAS_MODE=live cargo run --release -p collapse --bin atlas_ping
+
+# 3) Run DAW from a shell that sees the mode, OR export before launching:
 export ATLAS_MODE=live
-export ATLAS_API_KEY=your_key
-export ATLAS_ENGINE_ID=sound          # use the id from Atlas
-export ATLAS_BASE_URL=https://platform.mothquantum.com/api/v1/engines/run
+export ATLAS_BASE_URL=https://api.mothquantum.com
+export ATLAS_ENGINE_ID=retrocausal-echo-v1
 ```
 
-3. Adjust `ATLAS_BASE_URL` / response parsing in `collapse/src/atlas.rs` if Atlas’s public contract differs (the client accepts `samples`, `wav_base64`, or `audio_url`).
+Default engine **`retrocausal-echo-v1`**: no audio upload → quantum impulse response WAV → COLLAPSE convolves with it.
 
-Default **`ATLAS_MODE=mock`** generates deterministic IRs so judges can hear the plugin without credentials.
+Default **`ATLAS_MODE=mock`** if unset (offline demos).
 
 ## Demo audio
 

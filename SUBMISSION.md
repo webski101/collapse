@@ -12,10 +12,17 @@ COLLAPSE is a stereo/mono **insert effect**. Press **COLLAPSE** to request an im
 
 | Mode | How |
 |------|-----|
-| `ATLAS_MODE=mock` (default) | Local deterministic IR — no network. Used for demos below. |
-| `ATLAS_MODE=live` | `POST` to `ATLAS_BASE_URL` with Bearer `ATLAS_API_KEY`, engine `ATLAS_ENGINE_ID`. Accepts JSON `samples`, `wav_base64`, or `audio_url`. |
+| `ATLAS_MODE=mock` (default) | Local deterministic IR — no network. |
+| `ATLAS_MODE=live` | Real Moth API: `retrocausal-echo-v1` measures a quantum IR and returns a WAV used as the convolver. |
 
-Engine path lives in `collapse/src/atlas.rs`. Point `ATLAS_BASE_URL` / `ATLAS_ENGINE_ID` at the ids shown in [Atlas](https://platform.mothquantum.com/) once confirmed on Discord.
+Live flow (`collapse/src/atlas.rs`):
+
+1. `POST https://api.mothquantum.com/api/v1/engines/retrocausal-echo-v1/process`
+2. Poll `GET /api/v1/jobs/{id}/status`
+3. `GET /api/v1/jobs/{id}/result` → download `outputs[slot=result].url`
+
+Auth: `Authorization: Bearer moth_…`  
+Store key with `./scripts/set_atlas_key.sh` (do not commit the key).
 
 ## Deliverables
 
