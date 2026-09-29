@@ -8,10 +8,13 @@ Set-Location $root
 
 Write-Host "Building release plugin..."
 cargo build --release -p collapse
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "cargo build failed with exit code $LASTEXITCODE"
+}
 
 $dll = Join-Path $root "target\release\collapse.dll"
 if (-not (Test-Path $dll)) {
-    Write-Error "Missing $dll — build failed?"
+    Write-Error "Missing $dll - build failed?"
 }
 
 $bundle = Join-Path $root "dist\COLLAPSE.vst3\Contents\x86_64-win"

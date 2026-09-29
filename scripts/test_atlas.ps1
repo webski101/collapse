@@ -7,7 +7,7 @@ Set-Location $root
 
 $keyPath = Join-Path $env:USERPROFILE ".config\collapse\atlas_key"
 if (-not (Test-Path $keyPath)) {
-    Write-Error "No key at $keyPath — run .\scripts\set_atlas_key.ps1 first"
+    Write-Error "No key at $keyPath - run .\scripts\set_atlas_key.ps1 first"
 }
 
 $env:ATLAS_MODE = "live"
@@ -18,3 +18,6 @@ Write-Host "Project: $root"
 Write-Host "Key file: $keyPath (contents not shown)"
 Write-Host "Running atlas_ping..."
 cargo run --release -p collapse --bin atlas_ping
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "atlas_ping failed with exit code $LASTEXITCODE"
+}
